@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <!-- Appenders -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <param name="Target" value="System.out"/>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%C.%M]: %L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--<appender name="Root" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+    <!--<file>F:/VOLUMES/logstash-tutorial.log/RootApp.log</file>-->
+    <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+    <!--<fileNamePattern>logs/arc/RootApp.%d{yyyy-MM-dd}.gz</fileNamePattern>-->
+    <!--<maxHistory>10</maxHistory>-->
+    <!--</rollingPolicy>-->
+    <!--<encoder class="net.logstash.logback.encoder.LogstashEncoder"/>-->
+    <!--</appender>-->
+
+    <!--<appender name="Root" class="net.logstash.logback.appender.LogstashUdpSocketAppender">-->
+    <!--<host>localhost</host>-->
+    <!--&lt;!&ndash; port is optional (default value shown) &ndash;&gt;-->
+    <!--<port>514</port>-->
+    <!--<layout class="net.logstash.logback.layout.LogstashLayout"></layout>-->
+    <!--</appender>-->
+
+    <appender name="Root" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>F:/VOLUMES/logstash-tutorial.log/RootApp.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/arc/RootApp.%d{yyyy-MM-dd}.gz</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%C.%M]: %L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="Error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/Error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>F:/VOLUMES/logstash-tutorial.log/logs/arc/errors.%d{yyyy-MM-dd}.gz
+            </fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%C.%M]: %L - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Root Logger -->
+    <root level="INFO">
+        <appender-ref ref="Root"/>
+        <appender-ref ref="Error"/>
+        <appender-ref ref="console"/>
+    </root>
+
+    <logger name="error" level="INFO" additivity="false">
+        <appender-ref ref="Error"/>
+    </logger>
+
+    <springProfile name="test">
+        <!-- Root Logger -->
+        <root level="INFO">
+            <appender-ref ref="console"/>
+        </root>
+
+        <logger name="error" level="INFO" additivity="false">
+            <appender-ref ref="console"/>
+        </logger>
+    </springProfile>
+
+</configuration>
